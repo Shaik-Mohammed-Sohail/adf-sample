@@ -1,5 +1,5 @@
 {
-	"name": "snk1960",
+	"name": "snkrest",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "LSGen2",
@@ -11,10 +11,10 @@
 			"location": {
 				"type": "AzureBlobFSLocation",
 				"fileName": {
-					"value": "@concat('Mov-1960-',pipeline().RunId,'.csv')",
+					"value": "@concat('Mov-Rest-',pipeline().RunId,'.csv')",
 					"type": "Expression"
 				},
-				"folderPath": "before1960",
+				"folderPath": "Rest",
 				"fileSystem": "output"
 			},
 			"columnDelimiter": ",",
