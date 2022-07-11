@@ -10,6 +10,10 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobFSLocation",
+				"fileName": {
+					"value": "@concat('Mov',pipeline().RunId,'.csv')",
+					"type": "Expression"
+				},
 				"folderPath": "allmovies",
 				"fileSystem": "output"
 			},
