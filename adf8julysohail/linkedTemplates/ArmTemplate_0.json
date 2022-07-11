@@ -38,38 +38,6 @@
 			"dependsOn": []
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/DSAll')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "LSGen2",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "DelimitedText",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobFSLocation",
-						"fileName": {
-							"value": "@concat('Mov-All-',pipeline().RunId,'.csv')",
-							"type": "Expression"
-						},
-						"folderPath": "allmovies",
-						"fileSystem": "output"
-					},
-					"columnDelimiter": ",",
-					"escapeChar": "\\",
-					"firstRowAsHeader": true,
-					"quoteChar": "\""
-				},
-				"schema": []
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/LSGen2')]"
-			]
-		},
-		{
 			"name": "[concat(parameters('factoryName'), '/DSSource')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -123,6 +91,34 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/SinkAllDS')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "LSGen2",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"folderPath": "allmovies",
+						"fileSystem": "output"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/LSGen2')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/dfAllMovies')]",
 			"type": "Microsoft.DataFactory/factories/dataflows",
 			"apiVersion": "2018-06-01",
@@ -141,10 +137,10 @@
 					"sinks": [
 						{
 							"dataset": {
-								"referenceName": "DSAll",
+								"referenceName": "SinkAllDS",
 								"type": "DatasetReference"
 							},
-							"name": "sink1"
+							"name": "SinkAllDS"
 						}
 					],
 					"transformations": [],
@@ -166,13 +162,13 @@
 						"     preCommands: [],",
 						"     postCommands: [],",
 						"     skipDuplicateMapInputs: true,",
-						"     skipDuplicateMapOutputs: true) ~> sink1"
+						"     skipDuplicateMapOutputs: true) ~> SinkAllDS"
 					]
 				}
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/DSSource')]",
-				"[concat(variables('factoryId'), '/datasets/DSAll')]"
+				"[concat(variables('factoryId'), '/datasets/SinkAllDS')]"
 			]
 		}
 	]
