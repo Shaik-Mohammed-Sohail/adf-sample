@@ -15,10 +15,10 @@
 			"sinks": [
 				{
 					"dataset": {
-						"referenceName": "DSAll",
+						"referenceName": "SinkAllDS",
 						"type": "DatasetReference"
 					},
-					"name": "sink1"
+					"name": "SinkAllDS"
 				}
 			],
 			"transformations": [],
@@ -40,7 +40,7 @@
 				"     preCommands: [],",
 				"     postCommands: [],",
 				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true) ~> sink1"
+				"     skipDuplicateMapOutputs: true) ~> SinkAllDS"
 			]
 		}
 	}
